@@ -14,37 +14,55 @@ source:
     - https://cran.r-project.org/src/contrib/Archive/e1071/e1071_{{ version }}.tar.gz
   sha256: f68601743b9b49e1d1f8b9ec9963d6500d66158417c53f65bf7232678d88c622
 
-build:
-  number: 0
-  skip: true  # [win32]
 
+  # patches:
+   # List any patch files here
+   # - fix.patch
+
+build:
+  # If this is a new build for the same version, increment the build number.
+  number: 0
+
+  # This is required to make R link correctly on Linux.
   rpaths:
     - lib/R/lib/
     - lib/
 
+# Suggests: cluster, mlbench, nnet, randomForest, rpart, SparseM, xtable, Matrix, MASS
 requirements:
   build:
     - r-base
+    - {{ compiler('c') }}        # [not win]
+    - {{ compiler('cxx') }}      # [not win]
+    - {{native}}toolchain        # [win]
+    - {{posix}}filesystem        # [win]
+    - {{posix}}autoconf
+    - {{posix}}automake
+    - {{posix}}pkg-config
+    - {{posix}}make
     - r-class
-    - posix                # [win]
-    - {{native}}toolchain  # [win]
-    - gcc                  # [not win]
 
   run:
     - r-base
+    - {{native}}gcc-libs         # [win]
     - r-class
-    - libgcc  # [not win]
 
 test:
   commands:
-    - $R -e "library('e1071')"  # [not win]
+    # You can put additional test commands to be run here.
+    - $R -e "library('e1071')"           # [not win]
     - "\"%R%\" -e \"library('e1071')\""  # [win]
+
+  # You can also put a file called run_test.py, run_test.sh, or run_test.bat
+  # in the recipe that will be run at test time.
+
+  # requires:
+    # Put any additional test requirements here.
 
 about:
   home: https://CRAN.R-project.org/package=e1071
   license: GPL-2
-  summary: |
-    Functions for latent class analysis, short time Fourier transform, fuzzy clustering,
+  summary: Functions for latent class analysis, short time Fourier transform, fuzzy clustering,
     support vector machines, shortest path computation, bagged clustering, naive Bayes
     classifier, ...
   license_family: GPL2
@@ -53,3 +71,26 @@ extra:
   recipe-maintainers:
     - johanneskoester
     - bgruening
+    - mingwandroid
+
+# The original CRAN metadata for this package was:
+
+# Package: e1071
+# Version: 1.6-8
+# Title: Misc Functions of the Department of Statistics, Probability Theory Group (Formerly: E1071), TU Wien
+# Imports: graphics, grDevices, class, stats, methods, utils
+# Suggests: cluster, mlbench, nnet, randomForest, rpart, SparseM, xtable, Matrix, MASS
+# Authors@R: c(person(given = "David", family = "Meyer", role = c("aut", "cre"), email = "David.Meyer@R-project.org"), person(given = "Evgenia", family = "Dimitriadou", role = c("aut","cph")), person(given = "Kurt", family = "Hornik", role = "aut"), person(given = "Andreas", family = "Weingessel", role = "aut"), person(given = "Friedrich", family = "Leisch", role = "aut"), person(given = "Chih-Chung", family = "Chang", role = c("ctb","cph"), comment = "libsvm C++-code"), person(given = "Chih-Chen", family = "Lin", role = c("ctb","cph"), comment = "libsvm C++-code"))
+# Description: Functions for latent class analysis, short time Fourier transform, fuzzy clustering, support vector machines, shortest path computation, bagged clustering, naive Bayes classifier, ...
+# License: GPL-2
+# LazyLoad: yes
+# NeedsCompilation: yes
+# Packaged: 2017-02-01 16:13:21 UTC; meyer
+# Author: David Meyer [aut, cre], Evgenia Dimitriadou [aut, cph], Kurt Hornik [aut], Andreas Weingessel [aut], Friedrich Leisch [aut], Chih-Chung Chang [ctb, cph] (libsvm C++-code), Chih-Chen Lin [ctb, cph] (libsvm C++-code)
+# Maintainer: David Meyer <David.Meyer@R-project.org>
+# Repository: CRAN
+# Date/Publication: 2017-02-02 12:37:10
+
+# See
+# http://docs.continuum.io/conda/build.html for
+# more information about meta.yaml
