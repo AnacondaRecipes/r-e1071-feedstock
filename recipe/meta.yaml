@@ -1,4 +1,4 @@
-{% set version = '1.7-0' %}
+{% set version = '1.7-1' %}
 
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
@@ -11,7 +11,7 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/e1071_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/e1071/e1071_{{ version }}.tar.gz
-  sha256: 93699a2e16826459221cf7c9896d99e87fdc1c0e2e270bda302670760cbf643a
+  sha256: 5c5f04a51c1cd2c7dbdf69987adef9bc07116804c63992cd36d804a1daf89dfe
 
 build:
   merge_build_host: True  # [win]
@@ -23,7 +23,7 @@ build:
     - lib/R/lib/
     - lib/
 
-# Suggests: cluster, mlbench, nnet, randomForest, rpart, SparseM, xtable, Matrix, MASS
+# Suggests: cluster, mlbench, nnet, randomForest, rpart, SparseM, xtable, Matrix, MASS, slam
 requirements:
   build:
     - {{ compiler('c') }}        # [not win]
@@ -68,6 +68,7 @@ about:
     support vector machines, shortest path computation, bagged clustering, naive Bayes
     classifier, ...
   license_family: GPL2
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2'
 
 extra:
   recipe-maintainers:
@@ -78,20 +79,20 @@ extra:
 # The original CRAN metadata for this package was:
 
 # Package: e1071
-# Version: 1.7-0
+# Version: 1.7-1
 # Title: Misc Functions of the Department of Statistics, Probability Theory Group (Formerly: E1071), TU Wien
 # Imports: graphics, grDevices, class, stats, methods, utils
-# Suggests: cluster, mlbench, nnet, randomForest, rpart, SparseM, xtable, Matrix, MASS
+# Suggests: cluster, mlbench, nnet, randomForest, rpart, SparseM, xtable, Matrix, MASS, slam
 # Authors@R: c(person(given = "David", family = "Meyer", role = c("aut", "cre"), email = "David.Meyer@R-project.org"), person(given = "Evgenia", family = "Dimitriadou", role = c("aut","cph")), person(given = "Kurt", family = "Hornik", role = "aut"), person(given = "Andreas", family = "Weingessel", role = "aut"), person(given = "Friedrich", family = "Leisch", role = "aut"), person(given = "Chih-Chung", family = "Chang", role = c("ctb","cph"), comment = "libsvm C++-code"), person(given = "Chih-Chen", family = "Lin", role = c("ctb","cph"), comment = "libsvm C++-code"))
 # Description: Functions for latent class analysis, short time Fourier transform, fuzzy clustering, support vector machines, shortest path computation, bagged clustering, naive Bayes classifier, ...
 # License: GPL-2
 # LazyLoad: yes
 # NeedsCompilation: yes
-# Packaged: 2018-07-23 12:08:44 UTC; meyer
+# Packaged: 2019-03-18 21:30:54 UTC; meyer
 # Author: David Meyer [aut, cre], Evgenia Dimitriadou [aut, cph], Kurt Hornik [aut], Andreas Weingessel [aut], Friedrich Leisch [aut], Chih-Chung Chang [ctb, cph] (libsvm C++-code), Chih-Chen Lin [ctb, cph] (libsvm C++-code)
 # Maintainer: David Meyer <David.Meyer@R-project.org>
 # Repository: CRAN
-# Date/Publication: 2018-07-28 15:50:03 UTC
+# Date/Publication: 2019-03-19 15:40:09 UTC
 
 # See
 # http://docs.continuum.io/conda/build.html for
